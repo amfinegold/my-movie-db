@@ -40,11 +40,16 @@ namespace MyMovieDb.Controllers
         // GET: MovieReviews/Create
         public ActionResult Create()
         {
-			var movieModel = new MovieReViewModel
+			var movieModel = new MovieReViewModel();
+			var reviewList = db.reviews;
+			var selectList = new List<SelectListItem>();
+			selectList.Add(new SelectListItem { Text = "Rate your movie!", Value = "0", Selected = true });
+			foreach(var rev in reviewList)
 			{
-				reviewList = db.reviews.ToList()
-			};
-            return View(movieModel);
+				selectList.Add(new SelectListItem { Text = rev.Id + "-" + rev.Name, Selected = false, Value = rev.Id.ToString() });
+			}
+			movieModel.Reviews = selectList;
+			return View(movieModel);
         }
 
         // POST: MovieReviews/Create
@@ -72,12 +77,21 @@ namespace MyMovieDb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MovieReview movieReview = db.movieReviews.Find(id);
-            if (movieReview == null)
+			var movieModel = new MovieReViewModel();
+			var selectList = new List<SelectListItem>();
+			selectList.Add(new SelectListItem { Text = "Rate your movie!", Value = "0", Selected = true });
+			foreach (var rev in db.reviews)
+			{
+				selectList.Add(new SelectListItem { Text = rev.Id + "-" + rev.Name, Selected = false, Value = rev.Id.ToString() });
+			}
+			movieModel.Reviews = selectList;
+
+			movieModel.MovieReview= db.movieReviews.Find(id);
+            if (movieModel.MovieReview == null)
             {
                 return HttpNotFound();
             }
-            return View(movieReview);
+			return View(movieModel);
         }
 
         // POST: MovieReviews/Edit/5

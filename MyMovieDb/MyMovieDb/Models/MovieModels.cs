@@ -6,6 +6,10 @@ using System.Web;
 
 namespace MyMovieDb.Models
 {
+	public enum ReviewEnum
+	{
+		VeryBad = 1, Bad, Ehh, Good, VeryGood
+	}
 	public class MovieReview
 	{
 		public int Id { get; set; }
@@ -14,6 +18,7 @@ namespace MyMovieDb.Models
 		public string MovieTitle { get; set; }
 
 		[Display(Name ="My Rating")]
+		[Range(1,5)]
 		public int ReviewId { get; set; }
 		public DateTime ReviewDate { get; set; }
 

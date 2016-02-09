@@ -9,11 +9,7 @@ namespace MyMovieDb.Models
 	public class MovieReViewModel
 	{
 		public MovieReview MovieReview { get; set; }
-		public List<Review> reviewList { get; set; }
 
-		public IEnumerable<SelectListItem> Reviews
-		{
-			get { return new SelectList(reviewList, "ReviewId"); }
-		}
+		public List<SelectListItem> Reviews { get; set; }
 	}
 }
