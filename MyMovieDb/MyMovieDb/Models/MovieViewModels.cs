@@ -10,6 +10,7 @@ namespace MyMovieDb.Models
 	{
 		public MovieReview MovieReview { get; set; }
 		public List<Review> reviewList { get; set; }
+
 		public IEnumerable<SelectListItem> Reviews
 		{
 			get { return new SelectList(reviewList, "ReviewId"); }
