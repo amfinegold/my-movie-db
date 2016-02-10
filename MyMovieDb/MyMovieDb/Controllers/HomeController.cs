@@ -15,15 +15,20 @@ namespace MyMovieDb.Controllers
 
 		public ActionResult About()
 		{
-			ViewBag.Message = "Your application description page.";
+			ViewBag.Message = "About Us.";
 
 			return View();
 		}
 
 		public ActionResult Contact()
 		{
-			ViewBag.Message = "Your contact page.";
+			ViewBag.Message = "Here's how you can get in touch.";
 
+			return View();
+		}
+
+		public ActionResult Help()
+		{
 			return View();
 		}
 	}

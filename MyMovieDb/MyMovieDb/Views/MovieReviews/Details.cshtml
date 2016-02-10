@@ -4,7 +4,7 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2><i>@Model.MovieTitle.</i></h2>
 
 <div>
     <h4>MovieReview</h4>
@@ -19,11 +19,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ReviewId)
+            @Html.DisplayNameFor(model => model.RatingId)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ReviewId)
+            @Html.DisplayFor(model => model.RatingId)
         </dd>
 
         <dt>

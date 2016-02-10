@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace MyMovieDb.Models
@@ -12,4 +10,5 @@ namespace MyMovieDb.Models
 
 		public List<SelectListItem> Reviews { get; set; }
 	}
+
 }

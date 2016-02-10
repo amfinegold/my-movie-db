@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -18,10 +19,14 @@ namespace MyMovieDb.Models
 		public string MovieTitle { get; set; }
 
 		[Display(Name ="My Rating")]
-		[Range(1,5)]
-		public int ReviewId { get; set; }
+		[Range(1, 5, ErrorMessage = "You've got to rate this movie!")]
+		public int RatingId { get; set; }
+
+		[Display(Name ="Reviewed On")]
+		[DisplayFormat(DataFormatString = "{0: d MMM. yyyy}")]
 		public DateTime ReviewDate { get; set; }
 
+		[ReadOnly(true)]
 		public string ApplicationUserId { get; set; }
 	}
 

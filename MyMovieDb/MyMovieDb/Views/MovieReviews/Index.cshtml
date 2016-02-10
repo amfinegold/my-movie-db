@@ -1,47 +1,72 @@
 ﻿@model IEnumerable<MyMovieDb.Models.MovieReview>
 
 @{
-    ViewBag.Title = "Index";
+	ViewBag.Title = "My Movies";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title.</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
+
+@using (Html.BeginForm())
+{
+	<p class="display-inline">
+		Find by movie title: @Html.TextBox("SearchString")
+		<input type="submit" class="btn btn-info" value="Search" />
+	</p>
+}
+<p class="display-inline">
+	@Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.MovieTitle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ReviewId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ReviewDate)
-        </th>
-        
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.MovieTitle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReviewId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReviewDate)
-        </td>
-        
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+@if (Model.ToList().Count == 0)
+{
+	<hr />
+	<p>There aren't any movies here. Want to @Html.ActionLink("add one now?", "Create")</p>
 }
+else
+{
+	<table class="table">
+		<tr>
+			<th>
+				<a href="@Url.Action("Index", new { sortOrder = ViewBag.TitleSortParm })">
+					@Html.DisplayNameFor(model => model.MovieTitle)
+				</a>
+			</th>
+			<th>
+				<a href="@Url.Action("Index", new { sortOrder = ViewBag.RatingSortParm })">
+					@Html.DisplayNameFor(model => model.RatingId)
+				</a>
+			</th>
+			<th>
+				<a href="@Url.Action("Index", new { sortOrder = ViewBag.DateSortParm })">
+					@Html.DisplayNameFor(model => model.ReviewDate)
+				</a>
+			</th>
 
-</table>
+			<th></th>
+		</tr>
+
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.MovieTitle)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.RatingId)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.ReviewDate)
+				</td>
+
+				<td>
+					@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+					@Html.ActionLink("Details", "Details", new { id = item.Id }) |
+					@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+				</td>
+			</tr>
+		}
+
+	</table>
+
+}
