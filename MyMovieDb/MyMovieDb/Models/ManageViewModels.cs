@@ -12,6 +12,9 @@ namespace MyMovieDb.Models
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+		public int MovieReviewCount { get; set; }
+		[Display(Name ="Current Email Address")] 
+		public string EmailAddress { get; set; }
     }
 
     public class ManageLoginsViewModel
@@ -57,6 +60,17 @@ namespace MyMovieDb.Models
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
+
+	public class ChangeEmailViewModel
+	{
+		[Display(Name = "Current Email Address")]
+		public string CurrentEmailAddress { get; set; }
+
+		[Required]
+		[DataType(DataType.EmailAddress)]
+		[Display(Name ="New Email Address")]
+		public string NewEmailAddress { get; set; }
+	}
 
     public class AddPhoneNumberViewModel
     {

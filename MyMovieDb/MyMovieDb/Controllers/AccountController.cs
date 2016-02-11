@@ -492,6 +492,7 @@ namespace MyMovieDb.Controllers
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
+
 		private async Task<string> SendEmailConfirmationTokenAsync(string userID, string subject)
 		{
 			string code = await UserManager.GenerateEmailConfirmationTokenAsync(userID);

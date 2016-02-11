@@ -275,6 +275,7 @@
     <Content Include="Views\MovieReviews\Index.cshtml" />
     <Content Include="Views\Shared\Info.cshtml" />
     <Content Include="Views\Home\Help.cshtml" />
+    <Content Include="Views\Manage\ChangeEmailAddress.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
