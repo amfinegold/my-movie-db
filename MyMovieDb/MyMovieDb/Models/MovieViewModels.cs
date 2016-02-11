@@ -9,6 +9,8 @@ namespace MyMovieDb.Models
 		public MovieReview MovieReview { get; set; }
 
 		public List<SelectListItem> Reviews { get; set; }
+
+		public Dictionary<string, string> Errors { get; set; }
 	}
 
 }

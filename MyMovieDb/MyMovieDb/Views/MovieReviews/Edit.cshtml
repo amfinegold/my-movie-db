@@ -14,6 +14,12 @@
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		@if(Model.Errors !=null && Model.Errors.Count > 0)
+		{
+			<ul class="text-danger">
+				@foreach(var err in Model.Errors) {<li>@err.Value</li> }
+			</ul>
+		}
 		@Html.HiddenFor(model => model.MovieReview.Id)
 
         <div class="form-group">

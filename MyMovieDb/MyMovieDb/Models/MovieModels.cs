@@ -5,10 +5,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MyMovieDb.Models
 {
-	public enum ReviewEnum
-	{
-		VeryBad = 1, Bad, Ehh, Good, VeryGood
-	}
 	public class MovieReview
 	{
 		public int Id { get; set; }
@@ -33,7 +29,5 @@ namespace MyMovieDb.Models
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
-
-		public virtual ICollection<MovieReview> MovieReviews { get; set; }
 	}
 }

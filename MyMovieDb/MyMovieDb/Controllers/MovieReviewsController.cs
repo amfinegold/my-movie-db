@@ -64,9 +64,15 @@ namespace MyMovieDb.Controllers
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
 			MovieReview movieReview = db.movieReviews.Find(id);
+			if(movieReview.ApplicationUserId != User.Identity.GetUserId())
+			{
+				return RedirectToAction("Index");
+			}
 			if (movieReview == null)
 			{
-				return HttpNotFound();
+				ViewBag.Message = "This movie rating doesn't exist anymore. Did you delete it in another instance? <br />"
+					+ " Click <a href=\" / MovieReviews\">here to go back to your movie ratings</a>.";
+				return View("Info");
 			}
 			return View(movieReview);
 		}
@@ -88,11 +94,25 @@ namespace MyMovieDb.Controllers
 			movieModel.MovieReview.ReviewDate = DateTime.Now;
 			if (ModelState.IsValid)
 			{
-				db.movieReviews.Add(movieModel.MovieReview);
-				db.SaveChanges();
-				return RedirectToAction("Index");
+				var alreadyExists = db.movieReviews.Where(
+					x => x.MovieTitle == movieModel.MovieReview.MovieTitle
+					&& x.ApplicationUserId == movieModel.MovieReview.ApplicationUserId).ToList();
+				if (alreadyExists.Count == 0 || alreadyExists == null)
+				{
+					db.movieReviews.Add(movieModel.MovieReview);
+					db.SaveChanges();
+					return RedirectToAction("Index");
+				}
+				else
+				{
+					movieModel.Errors = new Dictionary<string, string>();
+					movieModel.Errors.Add("CreateMovieReview", "You've already rated this movie. Try a different title.");
+					movieModel.Reviews = new List<SelectListItem>();
+					movieModel.Reviews = GetReviews();
+					return View(movieModel);
+				}
 			}
-			return View(movieModel.MovieReview);
+			return View(movieModel);
 		}
 
 		// GET: MovieReviews/Edit/5
@@ -102,13 +122,20 @@ namespace MyMovieDb.Controllers
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
+			var movieReview = db.movieReviews.Find(id);
+			if(movieReview.ApplicationUserId != User.Identity.GetUserId())
+			{
+				return RedirectToAction("Index");
+			}
 			var movieModel = new MovieReViewModel();
 			movieModel.Reviews = GetReviews();
-			movieModel.MovieReview = db.movieReviews.Find(id);
-			
+			movieModel.MovieReview = movieReview;
+
 			if (movieModel.MovieReview == null)
 			{
-				return HttpNotFound();
+				ViewBag.Message = "This movie rating doesn't exist anymore. Did you delete it in another instance? <br />"
+					+ " Click <a href=\" / MovieReviews\">here to go back to your movie ratings</a>.";
+				return View("Info");
 			}
 			return View(movieModel);
 		}
@@ -120,12 +147,31 @@ namespace MyMovieDb.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var updated = db.movieReviews.Find(movieModel.MovieReview.Id);
-				updated.MovieTitle = movieModel.MovieReview.MovieTitle;
-				updated.RatingId = movieModel.MovieReview.RatingId;
-				updated.ReviewDate = DateTime.Now;
-				db.Entry(updated).State = EntityState.Modified;
-				db.SaveChanges();
+				var userId = User.Identity.GetUserId();
+				var alreadyExists = db.movieReviews.Where(
+					x => x.MovieTitle == movieModel.MovieReview.MovieTitle
+					&& x.ApplicationUserId == userId).ToList();
+				if (alreadyExists.Count > 0 && alreadyExists.First().ApplicationUserId != userId)
+				{
+					return RedirectToAction("Index");
+				}
+				if (alreadyExists.Count == 0)
+				{
+					var updated = db.movieReviews.Find(movieModel.MovieReview.Id);
+					updated.MovieTitle = movieModel.MovieReview.MovieTitle;
+					updated.RatingId = movieModel.MovieReview.RatingId;
+					updated.ReviewDate = DateTime.Now;
+
+					db.Entry(updated).State = EntityState.Modified;
+					db.SaveChanges();
+				}
+				else
+				{
+					movieModel.Errors = new Dictionary<string, string>();
+					movieModel.Errors.Add("EditMovieReview", "You've already rated this movie. Try a different title.");
+					movieModel.Reviews = GetReviews();
+					return View(movieModel);
+				}
 				return RedirectToAction("Index");
 			}
 
@@ -139,10 +185,18 @@ namespace MyMovieDb.Controllers
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
+
 			MovieReview movieReview = db.movieReviews.Find(id);
+			var userId = User.Identity.GetUserId();
+			if(User.Identity.GetUserId() != movieReview.ApplicationUserId)
+			{
+				return RedirectToAction("Index");
+			}
 			if (movieReview == null)
 			{
-				return HttpNotFound();
+				ViewBag.Message = "This movie rating has already been deleted. Did you click Delete twice, or delete it in another instance? <br />"
+					+" Click <a href=\" / MovieReviews\">here to go back to your movie ratings.</a>";
+				return View("Info");
 			}
 			return View(movieReview);
 		}
@@ -153,8 +207,12 @@ namespace MyMovieDb.Controllers
 		public ActionResult DeleteConfirmed(int id)
 		{
 			MovieReview movieReview = db.movieReviews.Find(id);
-			db.movieReviews.Remove(movieReview);
-			db.SaveChanges();
+
+			if (User.Identity.GetUserId() == movieReview.ApplicationUserId)
+			{
+				db.movieReviews.Remove(movieReview);
+				db.SaveChanges();
+			}
 			return RedirectToAction("Index");
 		}
 
