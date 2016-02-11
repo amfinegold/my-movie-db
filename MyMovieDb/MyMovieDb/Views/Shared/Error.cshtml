@@ -8,11 +8,11 @@
 @{
 	if (String.IsNullOrEmpty(ViewBag.errorMessage))
 	{
-		<h2 class="text-danger">An error occurred while processing your request.</h2>
+		<p class="text-danger">Wow. It looks like some important information disappeared somewhere between you and us. That's a struggle. Why don't you try it again?</p>
 	}
 	else
 	{
-		<h2 class="text-danger">@ViewBag.errorMessage</h2>
+		<p class="text-danger">@ViewBag.errorMessage</p>
 	}
 }
 

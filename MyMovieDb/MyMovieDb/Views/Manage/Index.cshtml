@@ -27,6 +27,16 @@
             }
         </dd>
 		<dt>Movies Rated</dt>
-		<dd>You've added @Model.MovieReviewCount reviews so far.</dd>
+		<dd>
+			@if(Model.MovieReviewCount == 1)
+			{
+				<text>You've added @Model.MovieReviewCount review so far. </text>
+			}
+			else
+			{
+				<text>You've added @Model.MovieReviewCount reviews so far.</text>
+
+			}
+		</dd>
     </dl>
 </div>

@@ -140,9 +140,7 @@ namespace MyMovieDb
 		}
 	}
 
-	//TODO Clean this up
 	public class ApplicationDbInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
-	//public class ApplicationDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
 	{
 		protected override void Seed(ApplicationDbContext db)
 		{

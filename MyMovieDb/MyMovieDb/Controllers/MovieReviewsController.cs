@@ -64,16 +64,17 @@ namespace MyMovieDb.Controllers
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
 			MovieReview movieReview = db.movieReviews.Find(id);
+			if (movieReview == null)
+			{
+				ViewBag.Message = "We couldn't find what you were looking for. <br />"
+					+ " Click <a href=\" / MovieReviews\">here to go back to your movie ratings</a>.";
+				return View("Info");
+			}
 			if(movieReview.ApplicationUserId != User.Identity.GetUserId())
 			{
 				return RedirectToAction("Index");
 			}
-			if (movieReview == null)
-			{
-				ViewBag.Message = "This movie rating doesn't exist anymore. Did you delete it in another instance? <br />"
-					+ " Click <a href=\" / MovieReviews\">here to go back to your movie ratings</a>.";
-				return View("Info");
-			}
+			
 			return View(movieReview);
 		}
 
@@ -133,7 +134,7 @@ namespace MyMovieDb.Controllers
 
 			if (movieModel.MovieReview == null)
 			{
-				ViewBag.Message = "This movie rating doesn't exist anymore. Did you delete it in another instance? <br />"
+				ViewBag.Message = "We couldn't find what you were looking for. <br />"
 					+ " Click <a href=\" / MovieReviews\">here to go back to your movie ratings</a>.";
 				return View("Info");
 			}
@@ -194,8 +195,8 @@ namespace MyMovieDb.Controllers
 			}
 			if (movieReview == null)
 			{
-				ViewBag.Message = "This movie rating has already been deleted. Did you click Delete twice, or delete it in another instance? <br />"
-					+" Click <a href=\" / MovieReviews\">here to go back to your movie ratings.</a>";
+				ViewBag.Message = ViewBag.Message = "We couldn't find what you were looking for. <br />"
+					+ " Click <a href=\" / MovieReviews\">here to go back to your movie ratings.</a>";
 				return View("Info");
 			}
 			return View(movieReview);
