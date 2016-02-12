@@ -69,9 +69,15 @@
 
 	<div id="main">
 		<h2 class="subtitle">
-			This page relies on a SendGrid account to send emails for email account confirmation.<br/>
-			You'll need to tweak a couple things to get it up and running.
+			There are a few tweaks to make to get this site up and running. You'll need to update the connection string
+			 and either supply SendGrid credentials or follow the directions to bypass email validation.
 		</h2>
+		<div class="section">
+			<p>Change the connection string</p>
+			<ul>
+				<li>In the <b>Web.config</b>, change the <b>DefaultConnection</b> connection string to something accurate for your environment.</li>
+			</ul>
+		</div>
 		<div class="section">
 			<p>If you have SendGrid credentials</p>
 			<ul>
@@ -79,7 +85,7 @@
 					Create an AppSettingsSecrets.config file (or equivalent) containing an appSettings tag
 					with "mailAccount" and "mailPassword" keys for your Sendgrid account and password.
 				</li>
-				<li>In <b>Web.config</b>, replace  <i>file="..\..\..\AppSettingsSecrets.config"</i> with an accurate path to your file.</li>
+				<li>In <b>Web.config < appSettings></b>, replace <b>file="..\..\..\AppSettingsSecrets.config"</b> with an accurate path to your file.</li>
 				<li>Light 'em up. Everything should work just fine.</li>
 			</ul>
 		</div>
@@ -88,8 +94,8 @@
 			<ul>
 				<li>Go to the <b>Login HttpPost</b> method in <b>AccountController.cs</b></li>
 				<li>
-					From lines 76-92, there is code to either validate emails (currently uncommented) and to proceed without a
-					validated email (commented). Follow the commenting directions in the code. You'll uncomment a line and comment out a region.
+					From lines 76-90, there is code to validate emails (currently uncommented). Follow the commenting directions 
+					in the code to bypass email validation.
 				</li>
 				<li>Go to the <b>Register HttpPost</b> method in <b>AccountController.cs</b>.<br /></li>
 				<li>
@@ -99,12 +105,7 @@
 			</ul>
 		</div>
 
-		<div class="section">
-			<p>The connectionString in the Web.config is almost assuredly wrong</p>
-			<ul>
-				<li>In the <b>Web.config</b>, change the <b>DefaultConnection</b> connection string to something accurate for your environment.</li>
-			</ul>
-		</div>
+		
 	</div>
 
 	

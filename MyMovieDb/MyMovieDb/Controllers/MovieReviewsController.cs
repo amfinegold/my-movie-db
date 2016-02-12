@@ -156,7 +156,8 @@ namespace MyMovieDb.Controllers
 				{
 					return RedirectToAction("Index");
 				}
-				if (alreadyExists.First().Id == movieModel.MovieReview.Id)
+				if ((alreadyExists.Count > 0 && alreadyExists.First().Id == movieModel.MovieReview.Id) 
+					|| alreadyExists.Count ==0)
 				{
 					var updated = db.movieReviews.Find(movieModel.MovieReview.Id);
 					updated.MovieTitle = movieModel.MovieReview.MovieTitle;
