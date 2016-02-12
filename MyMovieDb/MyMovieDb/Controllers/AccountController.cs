@@ -73,7 +73,11 @@ namespace MyMovieDb.Controllers
                 return View(model);
             }
 
-			// Require the user to have a confirmed email before they can log on.
+			//  Uncomment this line to allow login without email confirmation.
+			//  await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
+			#region Comment out this section to bypass email confirmation if you haven't got SendGrid set up in the Web.Config.
+			// Requires the user to have a confirmed email before they can log on.
 			var user = await UserManager.FindByNameAsync(model.Email);
 			if (user != null)
 			{
@@ -85,6 +89,8 @@ namespace MyMovieDb.Controllers
 					return View("Info");
 				}
 			}
+			#endregion Comment out this section to bypass email confirmation if you haven't got SendGrid set up in the Web.Config.
+
 
 			// This doesn't count login failures towards account lockout
 			// To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -168,15 +174,18 @@ namespace MyMovieDb.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-					//Commented to prevent login until user email is confirmed.
+					//Uncomment the lines below (and comment the region below) to allow login without confirmed email address.
 					//await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+					//return RedirectToAction("Index", "Home");
 
+					#region Comment out this region to bypass email confirmation.
 					string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your MyMovieRatings account");
 
 					ViewBag.Message = "Check your email and confirm your account. You must be confirmed "
 						+ "before you can log in.";
 
 					return View("Info");
+					#endregion Comment out this section to bypass email confirmation.
 				}
 				AddErrors(result);
             }

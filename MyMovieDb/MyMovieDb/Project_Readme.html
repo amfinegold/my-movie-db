@@ -1,151 +1,112 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>Your ASP.NET application</title>
-    <style>
-        body {
-            background: #fff;
-            color: #505050;
-            font: 14px 'Segoe UI', tahoma, arial, helvetica, sans-serif;
-            margin: 20px;
-            padding: 0;
-        }
+	<meta charset="utf-8" />
+	<title>Your ASP.NET application</title>
+	<style>
+		body {
+			background: #fff;
+			color: #505050;
+			font: 14px 'Segoe UI', tahoma, arial, helvetica, sans-serif;
+			margin: 20px;
+			padding: 0;
+		}
 
-        #header {
-            background: #efefef;
-            padding: 0;
-        }
+		#header {
+			background: #efefef;
+			padding: 0 0 1px 0;
+			text-align:center;
+		}
 
-        h1 {
-            font-size: 48px;
-            font-weight: normal;
-            margin: 0;
-            padding: 0 30px;
-            line-height: 150px;
-        }
+		.section {
+			background-color:#ece9ff;
+			margin: 10px;
+			padding: 0 4px 0 4px;
+		}
 
-        p {
-            font-size: 20px;
-            color: #fff;
-            background: #969696;
-            padding: 0 30px;
-            line-height: 50px;
-        }
+		h1 {
+			font-size: 3.5em;
+			font-weight: normal;
+			margin: 0;
+			padding: 0 30px;
+			line-height: 100px;
+		}
 
-        #main {
-            padding: 5px 30px;
-        }
+		p {
+			font-size: 20px;
+			color: #fff;
+			background: #969696;
+			padding: 0 30px;
+			line-height: 1.5em;
+			text-align: center;
+		}
 
-        .section {
-            width: 21.7%;
-            float: left;
-            margin: 0 0 0 4%;
-        }
+		#main {
+			padding: 5px 30px;
+		}
+		.subtitle{
+			text-align: center;
+		}
 
-            .section h2 {
-                font-size: 13px;
-                text-transform: uppercase;
-                margin: 0;
-                border-bottom: 1px solid silver;
-                padding-bottom: 12px;
-                margin-bottom: 8px;
-            }
+		ul {
+			list-style: none;
+			padding: 0;
+			margin: 0 auto;
+			line-height: 20px;
+		}
 
-            .section.first {
-                margin-left: 0;
-            }
-
-                .section.first h2 {
-                    font-size: 24px;
-                    text-transform: none;
-                    margin-bottom: 25px;
-                    border: none;
-                }
-
-                .section.first li {
-                    border-top: 1px solid silver;
-                    padding: 8px 0;
-                }
-
-            .section.last {
-                margin-right: 0;
-            }
-
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            line-height: 20px;
-        }
-
-        li {
-            padding: 4px 0;
-        }
-
-        a {
-            color: #267cb2;
-            text-decoration: none;
-        }
-
-            a:hover {
-                text-decoration: underline;
-            }
-    </style>
+		li {
+			padding: 4px 0;
+		}
+	</style>
 </head>
 <body>
 
-    <div id="header">
-        <h1>Your ASP.NET application</h1>
-        <p>Congratulations! You've created a project</p>
-    </div>
+	<div id="header">
+		<h1>Getting Started</h1>
+		<h2>How to get MyMovieRatings up and running.</h2>
+	</div>
 
-    <div id="main">
-        <div class="section first">
-            <h2>This application consists of:</h2>
-            <ul>
-                <li>Sample pages showing basic nav between Home, About, and Contact</li>
-                <li>Theming using <a href="http://go.microsoft.com/fwlink/?LinkID=615519">Bootstrap</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615520">Authentication</a>, if selected, shows how to register and sign in</li>
-                <li>ASP.NET features managed using <a href="http://go.microsoft.com/fwlink/?LinkID=320756">NuGet</a></li>
-            </ul>
-        </div>
+	<div id="main">
+		<h2 class="subtitle">
+			This page relies on a SendGrid account to send emails for email account confirmation.<br/>
+			You'll need to tweak a couple things to get it up and running.
+		</h2>
+		<div class="section">
+			<p>If you have SendGrid credentials</p>
+			<ul>
+				<li>
+					Create an AppSettingsSecrets.config file (or equivalent) containing an appSettings tag
+					with "mailAccount" and "mailPassword" keys for your Sendgrid account and password.
+				</li>
+				<li>In <b>Web.config</b>, replace  <i>file="..\..\..\AppSettingsSecrets.config"</i> with an accurate path to your file.</li>
+				<li>Light 'em up. Everything should work just fine.</li>
+			</ul>
+		</div>
+		<div class="section">
+			<p>If you don't have SendGrid credentials, and aren't planning on getting any</p>
+			<ul>
+				<li>Go to the <b>Login HttpPost</b> method in <b>AccountController.cs</b></li>
+				<li>
+					From lines 76-92, there is code to either validate emails (currently uncommented) and to proceed without a
+					validated email (commented). Follow the commenting directions in the code. You'll uncomment a line and comment out a region.
+				</li>
+				<li>Go to the <b>Register HttpPost</b> method in <b>AccountController.cs</b>.<br /></li>
+				<li>
+					From lines 177-190, there is more code to either validate email addresses (uncommented) and to proceed without
+					validating the email address. Follow the commenting directions to uncomment two lines and comment out a region.
+				</li>
+			</ul>
+		</div>
 
-        <div class="section">
-            <h2>Customize app</h2>
-            <ul>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615541">Get started with ASP.NET MVC</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615523">Change the site's theme</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615524">Add more libraries using NuGet</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615542">Configure authentication</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615526">Customize information about the website users</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615527">Get information from social providers</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615528">Add HTTP services using ASP.NET Web API</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615529">Secure your web API</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615530">Add real-time web with ASP.NET SignalR</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615531">Add components using Scaffolding</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615532">Test your app with Browser Link</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615533">Share your project</a></li>
-            </ul>
-        </div>
+		<div class="section">
+			<p>The connectionString in the Web.config is almost assuredly wrong</p>
+			<ul>
+				<li>In the <b>Web.config</b>, change the <b>DefaultConnection</b> connection string to something accurate for your environment.</li>
+			</ul>
+		</div>
+	</div>
 
-        <div class="section">
-            <h2>Deploy</h2>
-            <ul>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615534">Ensure your app is ready for production</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615535">Microsoft Azure</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615536">Hosting providers</a></li>
-            </ul>
-        </div>
-
-        <div class="section last">
-            <h2>Get help</h2>
-            <ul>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615537">Get help</a></li>
-                <li><a href="http://go.microsoft.com/fwlink/?LinkID=615538">Get more templates</a></li>
-            </ul>
-        </div>
-    </div>
-
+	
 </body>
 </html>
