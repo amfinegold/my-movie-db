@@ -38,3 +38,12 @@
 	</ul>
 </p>
 
+<h3>Things of Note Re:Security and Errors</h3>
+<p>
+	This project uses ASP.NET MVC canned security and validation. It's pretty decent, but as it stands it's not going to stop anybody angry and determined. SQL injection isn't a problem, and neither is javascript injection--but trying to test javascript/html injection will route you directly to the Yellow Screen Of Death because I haven't been able to figure out how to reroute site errors to friendly error pages. 
+</p>
+
+<p><b>
+	Happy movie reviewing!<br/>
+	--amfinegold
+</b></p>
