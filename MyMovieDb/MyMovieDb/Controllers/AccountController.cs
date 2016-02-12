@@ -171,16 +171,16 @@ namespace MyMovieDb.Controllers
                 if (result.Succeeded)
                 {
 					//Uncomment the lines below (and comment the region below) to allow login without confirmed email address.
-					await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-					return RedirectToAction("Index", "Home");
+					//await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+					//return RedirectToAction("Index", "Home");
 
 					#region Comment out this region to bypass email confirmation.
-					//string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your MyMovieRatings account");
+					string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your MyMovieRatings account");
 
-					//ViewBag.Message = "Check your email and confirm your account. You must be confirmed "
-					//	+ "before you can log in.";
+					ViewBag.Message = "Check your email and confirm your account. You must be confirmed "
+						+ "before you can log in.";
 
-					//return View("Info");
+					return View("Info");
 					#endregion Comment out this section to bypass email confirmation.
 				}
 				AddErrors(result);
